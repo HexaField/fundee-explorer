@@ -1,84 +1,73 @@
-# Template Monorepo
+# Fundee Explorer
 
-This is a modern, full-stack TypeScript monorepo template managed with **pnpm workspaces**. It provides a pre-configured environment for building scalable applications with a shared core library, a SolidJS client, and an Express server.
+**Fundee Explorer** is a tool designed to visualize the "invisible" funding ecosystem of NPM packages. It helps developers discover which dependencies in their supply chain are seeking financial support, making it easier to contribute back to the open-source community.
 
-## 📂 Project Structure
+## Features
 
-The monorepo is organized into the following packages:
+- **Ecosystem Mapping**: Enter any NPM package name to generate a nested, "holonic" map of its dependencies.
+- **Funding Discovery**: Identify packages that have funding channels (GitHub Sponsors, Open Collective, Tidelift, etc.).
+- **Deep Analysis**: The backend dynamically installs and analyzes the package dependency tree to find funding information even for deep dependencies.
+- **Clean UI**: A minimalist, commons-oriented interface built with SolidJS and Tailwind CSS.
 
-- **`packages/client`**: A frontend application built with **SolidJS**, **Vite**, and **Tailwind CSS**. It includes **Storybook** for component development and **Playwright** for end-to-end testing.
-- **`packages/server`**: A backend server built with **Express**. It uses **tsx** for fast development execution.
-- **`packages/core`**: A shared library containing common logic, types, or utilities used by both the client and server. It is bundled using **Rollup**.
+## Tech Stack
 
-## 🚀 Getting Started
+This project is a monorepo managed with **pnpm workspaces**.
+
+- **Frontend**: [SolidJS](https://www.solidjs.com/), [Vite](https://vitejs.dev/), [Tailwind CSS](https://tailwindcss.com/)
+- **Backend**: [Node.js](https://nodejs.org/), [Express](https://expressjs.com/)
+- **Tooling**: TypeScript, ESLint, Prettier, Vitest, Playwright
+
+## Getting Started
 
 ### Prerequisites
 
-- **Node.js** (Latest LTS recommended)
-- **pnpm** (Package manager)
+- Node.js (v18+ recommended)
+- pnpm
 
 ### Installation
 
-Install all dependencies across the monorepo:
+1. Clone the repository:
 
-```bash
-pnpm install
-```
+   ```bash
+   git clone https://github.com/HexaField/fundee-explorer.git
+   cd fundee-explorer
+   ```
 
-### Development
+2. Install dependencies:
+   ```bash
+   pnpm install
+   ```
 
-Start the development servers for both the client and server concurrently:
+### Running the Application
+
+Start both the client and server in development mode:
 
 ```bash
 pnpm dev
 ```
 
-- **Client**: http://localhost:5173 (default Vite port)
-- **Server**: Check console output for port (typically configured in `src/index.ts`)
+- **Frontend**: http://localhost:5173
+- **Backend**: http://localhost:3001
 
-## 🛠 Scripts
+## Project Structure
 
-Run these scripts from the root directory:
+```
+fundee-explorer/
+├── packages/
+│   ├── client/       # SolidJS frontend application
+│   ├── server/       # Express backend service
+│   └── core/         # Shared types and utilities
+├── package.json      # Root configuration
+└── pnpm-workspace.yaml
+```
 
-| Script | Description |
-| :--- | :--- |
-| `pnpm dev` | Starts client and server in development mode concurrently. |
-| `pnpm build` | Builds all packages in the workspace. |
-| `pnpm test` | Runs tests across all packages (Vitest & Playwright). |
-| `pnpm lint` | Lints code using ESLint. |
-| `pnpm format` | Formats code using Prettier. |
-| `pnpm check` | Runs type checking (`tsc`) and linting. |
-| `pnpm prepare` | Sets up Husky git hooks. |
+## How it Works
 
-## 🧰 Tech Stack & Tooling
+1. **Request**: The user enters a package name in the frontend.
+2. **Analysis**: The backend creates a temporary workspace, installs the package, and runs `npm fund --json`.
+3. **Response**: The hierarchical funding data is sent back to the client.
+4. **Visualization**: The frontend renders the dependency tree, highlighting packages with funding links.
 
-### Core Technologies
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **Package Manager**: [pnpm](https://pnpm.io/) (Workspaces)
-- **Build Tools**: [Vite](https://vitejs.dev/) (Client), [Rollup](https://rollupjs.org/) (Core)
+## License
 
-### Frontend (`packages/client`)
-- **Framework**: [SolidJS](https://www.solidjs.com/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Testing**: [Playwright](https://playwright.dev/)
-- **Documentation**: [Storybook](https://storybook.js.org/)
-
-### Backend (`packages/server`)
-- **Framework**: [Express](https://expressjs.com/)
-- **Runtime**: [tsx](https://github.com/privatenumber/tsx) (TypeScript execution)
-
-### Shared (`packages/core`)
-- **Testing**: [Vitest](https://vitest.dev/)
-
-### DevOps & Code Quality
-- **Linting**: [ESLint](https://eslint.org/) (v9, Flat Config)
-- **Formatting**: [Prettier](https://prettier.io/)
-- **Git Hooks**: [Husky](https://typicode.github.io/husky/) & [lint-staged](https://github.com/okonet/lint-staged)
-- **CI/CD Readiness**: Scripts are optimized for CI environments (`check`, `test`, `build`).
-
-## ⚙️ Configuration Files
-
-- `pnpm-workspace.yaml`: Defines the workspace structure.
-- `eslint.config.ts`: Root ESLint configuration (Flat Config).
-- `prettier.config.js`: Prettier configuration.
-- `tsconfig.json`: Base TypeScript configuration.
+[MIT](LICENSE)
